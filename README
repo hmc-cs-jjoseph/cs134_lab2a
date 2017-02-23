@@ -1,0 +1,11 @@
+NAME: Jesse Joseph
+EMAIL: jjoseph@hmc.edu
+ID: 040161840
+
+Question 2.1.1
+Why does it take so many iterations before errors are seen?
+Why does a significantly smaller number of iterations so seldom fail?
+The critical section here is the add function. Since it is very short, the likelihood of a thread being preempted is low, so it takes many iterations to randomly preempt in the critical section, between the line where the sum is computed and the counter is set to the sum. A small number of iterations rarely fails because with few iterations, each thread likely has time to execute its full amount of iterations before being time slice ended.
+
+
+

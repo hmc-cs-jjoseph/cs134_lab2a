@@ -9,15 +9,19 @@ struct threadArgs{
 	size_t iterations;
 };
 
+int opt_yield;
 void add(long long *pointer, long long value) {
 	long long sum = *pointer + value;
+	if (opt_yield) {
+		sched_yield();
+	}
 	*pointer = sum;
 }
 
 void *addToCounter(void *args) {
 	struct threadArgs *argStruct = (struct threadArgs *) args;
-	long long *counter = (long long *) (*argStruct).counter;
-	size_t iterations = (size_t) (*argStruct).iterations;
+	long long *counter = (long long *) argStruct->counter;
+	size_t iterations = (size_t) argStruct->iterations;
 	for(size_t i = 0; i < iterations; ++i) {
 		add(counter, 1);
 	}
@@ -27,22 +31,33 @@ void *addToCounter(void *args) {
 	return (void *) args;
 }
 
-void getArguments(size_t *buff2, int argc, char **argv) {
-	buff2[0] = 1;
-	buff2[1] = 1;
+struct programArgs{
+	size_t iterations;
+	size_t threads;
+	size_t testID;
+};
+
+void getArguments(struct programArgs *arguments, int argc, char **argv) {
+	arguments->iterations = 1;
+	arguments->threads = 1;
+	arguments->testID = 0;
 	char opt;
 	int optind;
   struct option options[] = {
     {"threads", required_argument, 0, 't'},
     {"iterations", required_argument, 0, 'i'},
+		{"yield", no_argument, 0, 'y'},
     {0, 0, 0, 0}};
   while((opt = getopt_long(argc, argv, "t:i:", options, &optind)) != -1) {
     switch(opt) {
+			case 'y':
+				arguments->testID = 1;
+				break;
       case 't':
-				buff2[0] = (size_t) atoi(optarg);
+				arguments->threads = (size_t) atoi(optarg);
       	break;
 			case 'i':
-				buff2[1] = (size_t) atoi(optarg);
+				arguments->iterations = (size_t) atoi(optarg);
 				break;
       case '?':
 				fprintf(stderr, "Usage: ./lab2_add --threads=<n threads> --iterations=<k iterations>\n");
@@ -56,11 +71,24 @@ void getArguments(size_t *buff2, int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
-	char *testname = "add-none";
-	size_t args[2];
-	getArguments(args, argc, argv);
-	size_t numThreads = args[0];
-	size_t iterations = args[1];
+	char *testname;
+	struct programArgs args;
+	getArguments(&args, argc, argv);
+	size_t numThreads = args.threads;
+	size_t iterations = args.iterations;
+	size_t testID = args.testID;
+	switch(testID) {
+		case 0:
+			testname = "add-none";
+			break;
+		case 1:
+			testname = "add-yield";
+			opt_yield = 1;
+			break;
+		default:
+			testname = "add-none";
+			break;
+	}
 
 
 	struct timespec start, finish;
