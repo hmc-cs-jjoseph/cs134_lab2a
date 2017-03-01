@@ -6,6 +6,10 @@ MODULES=lab2_add.c lab2_list.c
 DATA=lab2_add.csv lab2_list.csv
 IMAGES=lab2_add-1.png lab2_add-2.png lab2_add-3.png lab2_add-4.png lab2_add-5.png lab2_list-1.png lab2_list-2.png lab2_list-3.png lab2_list-4.png
 
+all: lab2_list.c lab2_add.c SortedList.c SortedList_m.c SortedList_s.c
+	make lab2_list
+	make lab2_add
+
 lab2_list: lab2_list.c SortedList.c SortedList_m.c SortedList_s.c
 	make SortedList
 	make SortedList_m
@@ -13,7 +17,7 @@ lab2_list: lab2_list.c SortedList.c SortedList_m.c SortedList_s.c
 	$(GXX) lab2_list.c -o lab2_list $(PTHREAD) $(FLAGS) SortedList.o SortedList_s.o SortedList_m.c
 
 lab2_add: lab2_add.c
-	$(GXX) lab2_add.c -o lab2_add $(PTHREAD) $(CSTD) $(FLAGS)
+	$(GXX) lab2_add.c -o lab2_add $(PTHREAD) $(FLAGS)
 
 SortedList: SortedList.h SortedList.c
 	$(GXX) -c SortedList.c  $(PTHREAD) $(FLAGS)
@@ -23,6 +27,15 @@ SortedList_s: SortedList_s.h SortedList_s.c
 
 SortedList_m: SortedList_m.h SortedList_m.c
 	$(GXX) -c SortedList_m.c  $(PTHREAD) $(FLAGS)
+
+graphs:
+	gnuplot lab2_list.gp
+	gnuplot lab2_add.gp
+
+tests:
+	make all
+	bash add_test.sh
+	bash list_test.sh
 
 dist:
 	tar -czvf lab2a-040161840.tar.gz Makefile README $(LISTSOURCES) $(MODULES) $(DATA) $(IMAGES)
