@@ -16,8 +16,10 @@ FILES:
  - SortedList_m.c - implementation of mutex protected SortedList
  - SortedList_s.h - header for spin lock protected SortedList
  - SortedList_s.c - implementation of spin lock protected SortedList
- - lab2_add.csv - data from add operations
- - lab2_list.csv - data from list operations
+ - lab2_add.csv 
+ - lab2_list.csv
+ - add_test.sh - shell script for running add tests
+ - list_test.sh - shell script for running list tests
 
 QUESTIONS
 
