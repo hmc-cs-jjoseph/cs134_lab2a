@@ -3,11 +3,9 @@ EMAIL: jjoseph@hmc.edu
 ID: 040161840
 
 ABOUT:
-I used a slip day.
-For some reason, I can't get this to pass the sanity check.
- - When I first ran it, it gave me a lot of errors because I was missing stuff in my Makefile
- - I updated my Makefile
- - Somehow, it still doesn't work. Based on the output, it's as if I never changed the Makefile. Same errors, even though they should be fixed.
+I used a slip day. Actually, I guess it's past midnight now on my slipped day. I'd rather lose points than use a second slip day if that's possible.
+I get one error on the sanity check because I use __sync_bool_compare_and_swap instead of __sync_val_compare_and_swap.
+I think there should be some leniency here because my solution is still just as correct.
 
 FILES:
  - lab2_add.c
