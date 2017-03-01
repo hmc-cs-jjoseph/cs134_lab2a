@@ -1,4 +1,5 @@
-GXX=gcc
+GXX=gcc 
+CSTD=-std=c99
 FLAGS=-Wall -Wextra -Wpedantic
 PTHREAD=-lpthread
 LISTSOURCES=SortedList.h SortedList.c SortedList_m.c SortedList_m.h SortedList_s.c SortedList_s.h
@@ -12,7 +13,7 @@ lab2_list: lab2_list.c SortedList.c SortedList_m.c SortedList_s.c
 	$(GXX) lab2_list.c -o lab2_list $(PTHREAD) $(FLAGS) SortedList.o SortedList_s.o SortedList_m.c
 
 lab2_add: lab2_add.c
-	$(GXX) lab2_add.c -o lab2_add $(PTHREAD) $(FLAGS)
+	$(GXX) lab2_add.c -o lab2_add $(PTHREAD) $(CSTD) $(FLAGS)
 
 SortedList: SortedList.h SortedList.c
 	$(GXX) -c SortedList.c  $(PTHREAD) $(FLAGS)
