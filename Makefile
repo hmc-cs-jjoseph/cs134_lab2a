@@ -4,6 +4,7 @@ PTHREAD=-lpthread
 LISTSOURCES=SortedList.h SortedList.c SortedList_m.c SortedList_m.h SortedList_s.c SortedList_s.h
 MODULES=lab2_add.c lab2_list.c
 DATA=lab2_add.csv lab2_list.csv
+IMAGES=lab2-add1.png lab2-add2.png lab2-add3.png lab2-add4.png lab2-add5.png lab2-list1.png lab2-list2.png lab2-list3.png lab2-list4.png
 
 lab2_list: lab2_list.c SortedList.c SortedList_m.c SortedList_s.c
 	make SortedList
@@ -24,7 +25,7 @@ SortedList_m: SortedList_m.h SortedList_m.c
 	$(GXX) -c SortedList_m.c  $(PTHREAD) $(FLAGS)
 
 dist:
-	tar -czvf lab2a-040161840.tar.gz Makefile README $(LISTSOURCES) $(MODULES) $(DATA)
+	tar -czvf lab2a-040161840.tar.gz Makefile README $(LISTSOURCES) $(MODULES) $(DATA) $(IMAGES)
 
 clean:
 	-rm lab2_add

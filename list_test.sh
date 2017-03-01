@@ -142,3 +142,15 @@ do
 		./lab2_list --yield=dl --iterations=$numIters --threads=$numThreads --sync=m >> $DATAFILE
 	done
 done
+
+for numThreads in 1 2 4 8 12 16 24
+do
+	echo "THREADS=$numThreads ITERATIONS=1000 SYNC=s"
+	./lab2_list --iterations=1000 --threads=$numThreads --sync=s >> $DATAFILE
+done
+
+for numThreads in 1 2 4 8 12 16 24
+do
+	echo "THREADS=$numThreads ITERATIONS=1000 SYNC=m"
+	./lab2_list --iterations=1000 --threads=$numThreads --sync=m >> $DATAFILE
+done
