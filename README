@@ -2,10 +2,44 @@ NAME: Jesse Joseph
 EMAIL: jjoseph@hmc.edu
 ID: 040161840
 
+ABOUT:
+I used a slip day.
+This submission won't pass the sanity check because I don't have the plots. The Pomona department server we were given access to does not have gnuplot installed. I didn't have time to port all of my work onto a Mudd server that does to try to generate the graphs.
+I think I've finished everything except the graphs. That also means that I wasn't able to answer the list questions because they are dependent on interpreting the graphs. 
+
+FILES:
+ - lab2_add.c
+ - lab2_list.c
+ - SortedList.h
+ - SortedList.c
+ - SortedList_m.h - header for mutex protected SortedList
+ - SortedList_m.c - implementation of mutex protected SortedList
+ - SortedList_s.h - header for spin lock protected SortedList
+ - SortedList_s.c - implementation of spin lock protected SortedList
+ - lab2_add.csv - data from add operations
+ - lab2_list.csv - data from list operations
+
+QUESTIONS
+
 Question 2.1.1
 Why does it take so many iterations before errors are seen?
 Why does a significantly smaller number of iterations so seldom fail?
 The critical section here is the add function. Since it is very short, the likelihood of a thread being preempted is low, so it takes many iterations to randomly preempt in the critical section, between the line where the sum is computed and the counter is set to the sum. A small number of iterations rarely fails because with few iterations, each thread likely has time to execute its full amount of iterations before being time slice ended.
 
 
+Question 2.1.2
+Why are the --yield runs so much slower?
+Where is the additional time going?
+Is it possible to get valid per-operation timings if we are using the --yield option?
+If so, explain how. If not, explain why not.
+The yield runs are much slower because each time the program goes to do any operation, the thread is forced to yield, forcing a context switch which adds a lot of overhead time. The per-operation times aren't valid because each operation now has the added time of the context switch, which is large compared to the time of the simple operation.
 
+Question 2.1.3
+Why does the average cost per operation drop with increasing iterations?
+If the cost per iteration is a function of the number of iterations, how do we know how many iterations to run (or what the "correct" cost is)?
+For the non-yield case, the average cost per operation drops as iterations increase because each thread uses its full time slice executing operations. For low iterations, the relative time performing operations compared to switching threads is low, so the time switching threads impacts the average operation cost. Eventually, once the operation time amortizes the switching time, the cost per operation will stabilize at some value.
+
+Question 2.1.4
+Why do all of the options perform similarly for low numbers of threads?
+Why do the three protected operations slow down as the number of threads rises?
+For low numbers of threads, there is very little contention. Each thread is waiting for fewer other threads to release locks. As the number of threads increases, each thread is waiting on more and more threads to exit critical sections and allow other threads to run.
