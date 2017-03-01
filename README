@@ -4,8 +4,10 @@ ID: 040161840
 
 ABOUT:
 I used a slip day.
-This submission won't pass the sanity check because I don't have the plots. The Pomona department server we were given access to does not have gnuplot installed. I didn't have time to port all of my work onto a Mudd server that does to try to generate the graphs.
-I think I've finished everything except the graphs. That also means that I wasn't able to answer the list questions because they are dependent on interpreting the graphs. 
+For some reason, I can't get this to pass the sanity check.
+ - When I first ran it, it gave me a lot of errors because I was missing stuff in my Makefile
+ - I updated my Makefile
+ - Somehow, it still doesn't work. Based on the output, it's as if I never changed the Makefile. Same errors, even though they should be fixed.
 
 FILES:
  - lab2_add.c
@@ -43,3 +45,5 @@ Question 2.1.4
 Why do all of the options perform similarly for low numbers of threads?
 Why do the three protected operations slow down as the number of threads rises?
 For low numbers of threads, there is very little contention. Each thread is waiting for fewer other threads to release locks. As the number of threads increases, each thread is waiting on more and more threads to exit critical sections and allow other threads to run.
+
+
